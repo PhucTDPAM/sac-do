@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Chọn màu, chuyển đổi mã HEX, RGB, HSL và tìm bảng màu cho thiết kế.">
+<title>Sắc độ — Bảng chọn màu</title>
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<header><div class="shell top"><a class="brand" href="./"><span class="mark" aria-hidden="true"></span>Sắc độ<span class="brand-dot">.</span></a><nav aria-label="Điều hướng"><a href="#chon-mau">Chọn màu</a><a href="#bang-mau">Bảng màu</a></nav></div></header>
+<main class="shell">
+<section class="intro" id="chon-mau">
+<p class="eyebrow"><span></span> CÔNG CỤ MÀU SẮC</p>
+<h1>Chọn đúng <em>sắc độ.</em></h1>
+<p>Tinh chỉnh màu, sao chép mã và khám phá những cách phối màu cho thiết kế của bạn.</p>
+</section>
+<div class="workspace">
+<section class="card picker" aria-labelledby="picker-title">
+<div class="card-head"><h2 id="picker-title">Bộ chọn màu</h2><button id="random" class="button">↻ <span>Ngẫu nhiên</span></button></div>
+<div class="plane" id="plane"><div class="cursor" id="cursor"></div></div>
+<div class="hue-row"><input aria-label="Sắc độ" id="hue" type="range" min="0" max="359"><input id="native" type="color" aria-label="Mở bộ chọn màu hệ thống"></div>
+<details><summary>Độ bão hòa và độ sáng</summary><label>Độ bão hòa <input id="sat" type="range" min="0" max="100" step=".1"></label><label>Độ sáng <input id="val" type="range" min="0" max="100" step=".1"></label></details>
+</section>
+<section class="card codes" aria-labelledby="codes-title">
+<div class="card-head"><h2 id="codes-title">Mã màu</h2><button id="save" class="button" aria-pressed="false">♡ Lưu màu</button></div>
+<div class="preview" id="preview"><span id="preview-code">#B7F36A</span></div>
+<div class="code-list">
+<form class="code" id="hex-form"><label for="hex">HEX</label><input id="hex" aria-describedby="hex-error" autocomplete="off" spellcheck="false" maxlength="7"><button type="button" data-copy="hex" aria-label="Sao chép HEX">Sao chép</button></form>
+<div class="code"><span>RGB</span><output id="rgb"></output><button data-copy="rgb" aria-label="Sao chép RGB">Sao chép</button></div>
+<div class="code"><span>HSL</span><output id="hsl"></output><button data-copy="hsl" aria-label="Sao chép HSL">Sao chép</button></div>
+</div><p id="hex-error" role="alert" hidden>Nhập mã HEX gồm 3 hoặc 6 ký tự, ví dụ #B7F36A.</p>
+</section>
+</div>
+<section class="palettes" id="bang-mau">
+<div class="palette-head"><div><p class="eyebrow"><span></span> PHỐI MÀU</p><h2>Bảng màu</h2></div><label for="scheme">Kiểu phối <select id="scheme"><option value="mono">Đơn sắc</option><option value="analog">Tương đồng</option><option value="comp">Bổ túc</option><option value="triad">Bộ ba</option></select></label></div>
+<div id="palette" class="swatches"></div>
+</section>
+<section id="saved-section" class="palettes" hidden><div class="palette-head"><h2>Màu đã lưu</h2></div><div id="saved" class="swatches"></div></section>
+</main>
+<footer><div class="shell">Sắc độ<span class="brand-dot">.</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+</body>
+</html>
