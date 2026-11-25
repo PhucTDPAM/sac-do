@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Chọn màu, chuyển đổi mã HEX, RGB, HSL và tìm bảng màu cho thiết kế.">
 <title>Sắc độ — Bảng chọn màu</title>
-<link rel="stylesheet" href="./style.css">
-<script src="./app.js" defer></script>
+<link rel="stylesheet" href="./style.css?v=2">
+<script src="./app.js?v=2" defer></script>
 </head>
 <body>
-<header><div class="shell top"><a class="brand" href="./"><span class="mark" aria-hidden="true"></span>Sắc độ<span class="brand-dot">.</span></a><nav aria-label="Điều hướng"><a href="#chon-mau">Chọn màu</a><a href="#bang-mau">Bảng màu</a></nav></div></header>
+<header><div class="shell top"><a class="brand" href="./"><span class="mark" aria-hidden="true"></span>Sắc độ<span class="brand-dot">.</span></a><nav aria-label="Điều hướng"><a href="#chon-mau">Chọn màu</a><a href="#thu-vien">Thư viện màu</a></nav></div></header>
 <main class="shell">
 <section class="intro" id="chon-mau">
 <p class="eyebrow"><span></span> CÔNG CỤ MÀU SẮC</p>
@@ -38,6 +38,12 @@
 <div id="palette" class="swatches"></div>
 </section>
 <section id="saved-section" class="palettes" hidden><div class="palette-head"><h2>Màu đã lưu</h2></div><div id="saved" class="swatches"></div></section>
+<section class="palettes library" id="thu-vien" aria-labelledby="library-title">
+<div class="palette-head"><div><p class="eyebrow"><span></span> TRA CỨU</p><h2 id="library-title">Thư viện màu</h2></div></div>
+<p>Chọn một ô để xem màu trong bộ chọn và sao chép mã HEX.</p>
+<nav id="library-nav" aria-label="Nhóm màu"></nav>
+<div id="library-groups"></div>
+</section>
 </main>
 <footer><div class="shell">Sắc độ<span class="brand-dot">.</span></div></footer>
 <div class="toast" id="toast" role="status"></div>

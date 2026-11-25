@@ -203,20 +203,72 @@ function renderSaved() {
   swatches(get("saved"), saved);
 }
 
-document.querySelectorAll("[data-copy]").forEach(button => button.addEventListener("click", async () => {
+async function copyCode(value, fallback = "Không thể truy cập bộ nhớ tạm.") {
+  try {
+    await navigator.clipboard.writeText(value);
+    message("Đã sao chép " + value);
+  } catch {
+    message(fallback);
+  }
+}
+
+document.querySelectorAll("[data-copy]").forEach(button => button.addEventListener("click", () => {
   const format = button.dataset.copy;
   if (format === "hex" && !applyHex()) {
     hexInput.focus();
     return;
   }
-  const value = format === "hex" ? currentHex : get(format).textContent;
-  try {
-    await navigator.clipboard.writeText(value);
-    message("Đã sao chép " + value);
-  } catch {
-    message("Không thể truy cập bộ nhớ tạm.");
-  }
+  copyCode(format === "hex" ? currentHex : get(format).textContent);
 }));
+
+const libraryGroups = [
+  ["pastel", "Pastel", "FFD1DC FFB3C6 FFCBB3 FFE0B5 FFF1B8 F7F6C5 D9F4B5 C1EBC0 B9EDE0 B8E5F4 BCD9FA C9C9F5 DCC6EF F0C8F2"],
+  ["ruc-ro", "Rực rỡ", "FF1744 FF3399 F72585 FF5722 FF9100 FFCA28 FFE600 B4F000 39E75F 00CFA8 00BCD4 00A6FF 304FFE 7C3AED"],
+  ["trung-tinh", "Trung tính", "FFFFFF FAFAF9 F5F5F4 E7E5E4 D6D3D1 A8A29E 78716C 57534E 44403C 292524 1C1917 0F172A 171717 000000"],
+  ["tong-dat", "Tông đất", "F3E4CE EAD1AE DBB895 C9936E C17754 A6533F 874938 65382F B8A185 93825A 797951 647049 46553A 523B2C"],
+  ["tong-nong", "Tông nóng", "FFF0DC FFDEB1 FFBD80 FFA05C FF854F F46B45 F24D50 D93744 BE273E A61B37 841C36 651A30 F5AF96 D78678"],
+  ["tong-lanh", "Tông lạnh", "DCEBFD AED6F1 80BADF 559CCA 2D79B5 24629B 17477C 0C2F55 A1DDD4 61C3BA 289D9F 197786 615DAA 453581"],
+  ["tong-dam", "Tông đậm", "681C35 4C1533 55205F 3E2769 30245B 172554 123653 104852 075461 145747 204732 383E22 593321 412722"]
+];
+
+function renderLibrary() {
+  for (const [id, title, codes] of libraryGroups) {
+    const link = document.createElement("a");
+    link.href = "#" + id;
+    link.textContent = title;
+    get("library-nav").append(link);
+
+    const group = document.createElement("section");
+    group.id = id;
+    group.className = "library-group";
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+    const grid = document.createElement("div");
+    grid.className = "library-grid";
+
+    for (const code of codes.split(" ")) {
+      const hex = "#" + code;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "library-color";
+      button.setAttribute("aria-label", "Chọn và sao chép " + hex);
+      const sample = document.createElement("span");
+      sample.style.backgroundColor = hex;
+      const label = document.createElement("code");
+      label.textContent = hex;
+      button.append(sample, label);
+      button.addEventListener("click", () => {
+        render(fromHex(hex));
+        copyCode(hex, "Đã chọn " + hex + ". Không thể truy cập bộ nhớ tạm.");
+      });
+      grid.append(button);
+    }
+
+    group.append(heading, grid);
+    get("library-groups").append(group);
+  }
+}
 
 render(fromHex("#B7F36A"));
 renderSaved();
+renderLibrary();
